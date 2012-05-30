@@ -35,6 +35,19 @@ static void libcouchbase_timeout_handler(libcouchbase_socket_t sock,
                                          void *arg)
 {
     libcouchbase_t instance = arg;
+
+    if(instance->tap.is_tap_instance == LIBCOUCHBASE_TAP_CONNECTION)
+    {
+        /*Reset the timer */
+        instance->timeout.next = gethrtime();
+        libcouchbase_size_t idx;
+        for (idx = 0; idx < instance->nservers; ++idx) {
+            libcouchbase_server_t *server = instance->servers + (libcouchbase_size_t)idx;
+            server->next_timeout = instance->timeout.next;
+        }
+        return;
+    }
+
     /* Remove the timer */
     instance->io->delete_timer(instance->io, instance->timeout.event);
     instance->timeout.next = 0;

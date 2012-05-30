@@ -50,6 +50,7 @@
 #endif
 
 #define LIBCOUCHBASE_DEFAULT_TIMEOUT 2500000
+#define LIBCOUCHBASE_TAP_CONNECTION 1
 
 #ifdef __cplusplus
 extern "C" {
@@ -186,6 +187,7 @@ extern "C" {
 
         struct {
             libcouchbase_tap_filter_t filter;
+            libcouchbase_uint8_t is_tap_instance;
         } tap;
 
 

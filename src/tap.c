@@ -201,6 +201,7 @@ libcouchbase_error_t libcouchbase_tap_cluster(libcouchbase_t instance,
     /* /\* connect to the upstream server. *\/ */
     /* instance->vbucket_state_listener = tap_vbucket_state_listener; */
     instance->tap.filter = filter;
+    instance->tap.is_tap_instance = LIBCOUCHBASE_TAP_CONNECTION;
 
     for (ii = 0; ii < instance->nservers; ++ii) {
         tap_vbucket_state_listener(instance->servers + ii);
